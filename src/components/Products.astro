@@ -1,0 +1,74 @@
+---
+import MyCustomImageComponent from './MyCustomImageComponent.astro'
+
+const cards = [
+  {
+    title: 'Deep earth',
+    imageName: 'image-deep-earth.jpg'
+  },
+  {
+    title: 'Night arcade',
+    imageName: 'image-night-arcade.jpg'
+  },
+  {
+    title: 'Soccer team VR',
+    imageName: 'image-soccer-team.jpg'
+  },
+  {
+    title: 'The grid',
+    imageName: 'image-grid.jpg'
+  },
+  {
+    title: 'From up above VR',
+    imageName: 'image-from-above.jpg'
+  },
+  {
+    title: 'Pocket borealis',
+    imageName: 'image-pocket-borealis.jpg'
+  },
+  {
+    title: 'The curiosity',
+    imageName: 'image-curiosity.jpg'
+  },
+  {
+    title: 'Make it fisheye',
+    imageName: 'image-fisheye.jpg'
+  }
+]
+
+const mobileImages = import.meta.glob<{ default: ImageMetadata }>('/src/assets/images/mobile/*')
+const desktopImages = import.meta.glob<{ default: ImageMetadata }>('/src/assets/images/desktop/*')
+
+---
+
+<section id="products" class="p-6 bg-white scroll-mt-24">
+  <div class="grid grid-cols justify-items-center max-w-container mx-auto md:grid-cols-2 md:grid-rows-[repeat(2,_min-content)] md:gap-y-20">
+    <div class="md:justify-self-start">
+      <h3 class="uppercase text-3xl text-black md:text-4xl lg:text-5xl">Our creations</h3>
+    </div>
+    <div class="grid grid-cols-1 gap-6 mt-12 md:order-3 md:col-span-2 md:mt-0 md:grid-cols-3 md:gap-8 lg:grid-cols-4">
+      {cards.map(({ title, imageName }) => {
+        const desktopImagePath = '/src/assets/images/desktop/' + imageName
+        const mobileImagePath = '/src/assets/images/mobile/' + imageName
+
+        return (
+          <div class="relative cursor-pointer [&_img]:transition-transform [&_img]:hover:scale-110">
+            <div class="overflow-hidden">
+              <MyCustomImageComponent
+                mobileImgUrl={mobileImages[mobileImagePath]()}
+                desktopImgUrl={desktopImages[desktopImagePath]()}
+                alt={title} 
+              />
+            </div>
+            <div class="absolute bottom-0 left-0 w-2/5 pl-5 pb-5 md:w-full lg:w-10/12 lg:pl-10 lg:pb-10">
+              <h4 class="uppercase text-2xl text-white md:text-3xl">{title}</h4>
+            </div>
+          </div>
+        )
+      })}
+    </div>
+    <div class="mt-8 md:justify-self-end md:order-2 md:mt-0">
+      <button class="py-2 px-10 border-2 border-black font-alata-regular text-sm tracking-[.3em] uppercase hover:bg-black hover:text-white">See all</button>
+    </div>
+  </div>
+</section>
