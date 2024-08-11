@@ -5,6 +5,8 @@ import icon from 'astro-icon'
 
 // https://astro.build/config
 export default defineConfig({
+  site: 'https://danieldampe.github.io',
+  base: '/loopstudios-landing-page-main',
   integrations: [
     tailwind(),
     icon({
